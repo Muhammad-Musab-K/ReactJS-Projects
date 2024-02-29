@@ -11,7 +11,7 @@ function App() {
       if (place !== "") {
         const weatherData = await fetchApi(place);
         setData(weatherData);
-        console.log(weatherData);
+        setPlace("")
       }
     } catch (error) {
       console.error('Error fetching weather data:', error);
@@ -28,25 +28,25 @@ function App() {
           value={place}
           onChange={(e) => setPlace(e.target.value)}
         />
-        <button 
-        className='p-3 rounded-lg bg-purple-300 text-purple-800'
-        onClick={fetchData}
-        >Search</button>
+          <button
+            className='p-3 rounded-lg bg-purple-300 text-purple-800'
+            onClick={fetchData}
+          >Search</button>
         </div>
-        <div className='p-10 flex flex-col  gap-3 w-full h-3/5 md:w-[600px] md:h-[500px] backdrop-blur-lg shadow-purple-400 shadow-md rounded-lg'>
+        <div className='p-10 flex flex-col  gap-3 w-full  md:w-[600px] md:h-[500px] backdrop-blur-lg shadow-purple-400 shadow-md rounded-lg'>
           <h1 className=' text-4xl font-semibold text-purple-300'>{data?.name}</h1>
 
-          <div className='flex items-center justify-between'><h1 className=' text-7xl font-semibold text-purple-300'>{data?.main.temp} C</h1><img className='w-40' src={`http://openweathermap.org/img/wn/${data?.weather[0].icon}.png`} alt="" /></div>
+          <div className='flex items-center justify-between'><h1 className=' text-7xl font-semibold text-purple-300'>{data?.main?.temp} C</h1><img className='w-40' src={data?.weather && `http://openweathermap.org/img/wn/${data?.weather[0]?.icon}.png`} alt="" /></div>
 
           <hr className='w-4/5 h-1 bg-purple-300' />
 
-          <div className='flex gap-4 flex-wrap text-purple-300 text-xl '>
-            <p>humidity:{data?.main?.humidity} |</p>
-            <p>Temp Max:{data?.main?.temp_max} |</p>
-            <p>Temp Min:{data?.main?.temp_min} |</p>
-            <p>sunset:{data?.sys.sunset} |</p>
-            <p>sunset:{data?.sys.sunset} |</p>
-            <p>sunrise:{data?.sys.sunrise} |</p>
+          <div className='flex gap-4 flex-wrap text-purple-300 text-sm md:text-lg '>
+            {data?.main? <><p>humidity :{data?.main?.humidity} | </p>
+            <p>Temp Max :{data?.main?.temp_max} | </p>
+            <p>Temp Min :{data?.main?.temp_min} | </p>
+            <p>sunset :{data?.sys?.sunset} | </p>
+            <p>sunset :{data?.sys?.sunset} |  </p>
+            <p>sunrise :{data?.sys?.sunrise} | </p></>  : "NO PLACE"}
           </div>
         </div>
       </div>
